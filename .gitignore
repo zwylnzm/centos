@@ -1,0 +1,45 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac:
+*.DS_Store
+
+# Emacs
+*.org#
+*.org~
+*.el#
+*.el~
+
+# Latex
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.dvi
+*-converted-to.*
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+*.alg
+*.loa
+*.thm
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.ist
+
