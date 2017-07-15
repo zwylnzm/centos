@@ -10,7 +10,7 @@ ENV VNC_RESOLUTION 1280x1024
 ENV VNC_PW vncpassword
 
 
-ENV HOME /home/kknd
+ENV HOME /home/docker
 ENV STARTUPDIR /dockerstartup
 WORKDIR $HOME
 ENV INST_SCRIPTS $HOME/install
@@ -29,27 +29,32 @@ RUN yum -y install bash-completion
 RUN yum -y install nano
 RUN yum -y install emacs
 RUN yum -y install git
-RUN yum --enablerepo=epel -y -x gnome-keyring --skip-broken groups install "Xfce" 
+RUN yum -y groupinstall xfce
+RUN yum -y install mousepad
+RUN yum -y xfwm4-themes
 RUN yum -y groups install "Fonts"
 RUN yum erase -y *power* *screensaver*
 RUN rm /etc/xdg/autostart/xfce-polkit*
 RUN /bin/dbus-uuidgen > /etc/machine-id
 RUN yum -y install tigervnc-server
 RUN yum -y install lyx
+RUN yum -y install evince
 RUN yum -y install firefox
+RUN yum -y install libreoffice
 RUN yum -y install nss_wrapper gettext
 RUN yum clean all
 
 
 ### configuration
-RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
-ADD ./config/xfce/ $HOME/
-RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
+#RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+#ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
+#ADD ./config/xfce/ $HOME/
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+#RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
 ADD ./dockerboot $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-USER 1984
+USER docker
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--tail-log"]
