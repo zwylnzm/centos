@@ -27,16 +27,16 @@ RUN yum -y install which
 RUN yum -y install net-tools 
 RUN yum -y install bash-completion 
 RUN yum -y install nano
-# RUN yum -y install emacs
-# RUN yum -y install git
+RUN yum -y install emacs
+RUN yum -y install git
 RUN yum --enablerepo=epel -y -x gnome-keyring --skip-broken groups install "Xfce" 
 RUN yum -y groups install "Fonts"
 RUN yum erase -y *power* *screensaver*
 RUN rm /etc/xdg/autostart/xfce-polkit*
 RUN /bin/dbus-uuidgen > /etc/machine-id
 RUN yum -y install tigervnc-server
-# RUN yum -y install lyx
-# RUN yum -y install firefox
+RUN yum -y install lyx
+RUN yum -y install firefox
 RUN yum -y install nss_wrapper gettext
 RUN yum clean all
 
@@ -44,6 +44,7 @@ RUN yum clean all
 ### configuration
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
+ADD ./config/xfce/ $HOME/
 RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
 ADD ./dockerboot $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME

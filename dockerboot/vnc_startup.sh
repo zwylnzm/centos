@@ -16,6 +16,10 @@ fi
 ## resolve_vnc_connection
 VNC_IP=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
 
+## change vnc password
+echo -e "\n------------------ change VNC password  ------------------"
+(echo $VNC_PW && echo $VNC_PW) | vncpasswd
+
 ## start vncserver and noVNC webclient
 vncserver -kill :1 || rm -rfv /tmp/.X*-lock /tmp/.X11-unix || echo "remove old vnc locks to be a reattachable container"
 vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION
