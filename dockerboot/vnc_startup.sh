@@ -3,7 +3,7 @@
 set -e
 
 # should also source $STARTUPDIR/generate_container_user
-source .bashrc
+source ~/.bashrc
 
 # add `--skip` to startup args, to skip the VNC startup procedure
 if [[ $1 =~ --skip ]]; then
@@ -12,9 +12,6 @@ if [[ $1 =~ --skip ]]; then
     echo "Executing command: '${@:2}'"
     exec "${@:2}"
 fi
-
-## write correct window size to chrome properties
-$STARTUPDIR/chrome-init.sh
 
 ## resolve_vnc_connection
 VNC_IP=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')
