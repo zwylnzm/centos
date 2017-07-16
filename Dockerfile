@@ -9,7 +9,7 @@ ENV VNC_COL_DEPTH 24
 ENV VNC_RESOLUTION 1280x1024
 ENV VNC_PW vncpassword
 
-
+RUN useradd -m -G wheel docker && echo "docker:docker" | chpasswd
 ENV HOME /home/docker
 ENV STARTUPDIR /dockerstartup
 WORKDIR $HOME
@@ -50,8 +50,7 @@ RUN yum clean all
 #RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 #ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
 #ADD ./config/xfce/ $HOME/
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
-#RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
+RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
 ADD ./dockerboot $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
