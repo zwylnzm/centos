@@ -46,6 +46,7 @@ RUN yum -y install firefox
 RUN yum -y install libreoffice
 RUN yum -y install xarchiver
 RUN yum -y install nss_wrapper gettext
+RUN yum -y install R
 RUN yum clean all
 
 
