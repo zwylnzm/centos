@@ -31,7 +31,8 @@ RUN yum -y install emacs
 RUN yum -y install git
 RUN yum -y groupinstall xfce
 RUN yum -y install mousepad
-RUN yum -y xfwm4-themes
+RUN yum -y install gtk2-engines
+RUN yum -y install xfwm4-themes
 RUN yum -y groups install "Fonts"
 RUN yum erase -y *power* *screensaver*
 RUN rm /etc/xdg/autostart/xfce-polkit*
