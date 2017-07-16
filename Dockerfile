@@ -6,7 +6,7 @@ ENV DISPLAY :1
 ENV VNC_PORT 5901
 EXPOSE $VNC_PORT
 ENV VNC_COL_DEPTH 24
-ENV VNC_RESOLUTION 1280x1024
+ENV VNC_RESOLUTION 1280x720
 ENV VNC_PW vncpassword
 
 RUN useradd -m -G wheel docker && echo "docker:docker" | chpasswd
@@ -39,9 +39,12 @@ RUN rm /etc/xdg/autostart/xfce-polkit*
 RUN /bin/dbus-uuidgen > /etc/machine-id
 RUN yum -y install tigervnc-server
 RUN yum -y install lyx
+RUN yum -y install texlive-xetex*
+RUN yum -y install texlive-euenc
 RUN yum -y install evince
 RUN yum -y install firefox
 RUN yum -y install libreoffice
+RUN yum -y install xarchiver
 RUN yum -y install nss_wrapper gettext
 RUN yum clean all
 
@@ -49,7 +52,7 @@ RUN yum clean all
 ### configuration
 #RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 #ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
-#ADD ./config/xfce/ $HOME/
+ADD ./config/config/ $HOME/.config
 RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
 ADD ./dockerboot $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
