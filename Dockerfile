@@ -49,6 +49,8 @@ RUN yum -y install nss_wrapper gettext
 RUN yum -y install R
 RUN yum -y install gstreamer gstreamer-plugins-base
 RUN $INST_SCRIPTS/rstudio.sh
+RUN yum -y install ibus-libpinyin
+RUN yum -y install im-chooser
 RUN yum clean all
 
 
