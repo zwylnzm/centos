@@ -47,6 +47,8 @@ RUN yum -y install libreoffice
 RUN yum -y install xarchiver
 RUN yum -y install nss_wrapper gettext
 RUN yum -y install R
+RUN yum -y install gstreamer gstreamer-plugins-base
+RUN $INST_SCRIPTS/rstudio.sh
 RUN yum clean all
 
 
@@ -54,7 +56,10 @@ RUN yum clean all
 #RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 #ADD ./config/CentOS-Base.repo /etc/yum.repos.d/
 ADD ./config/config/ $HOME/.config
+ADD ./config/emacs.d/ $HOME/.emacs.d
+ADD ./config/pip $HOME/.pip
 RUN echo 'source $STARTUPDIR/generate_container_user' >> $HOME/.bashrc
+RUN echo 'export PS1="\[\033[38;5;11m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\h:\[$(tput sgr0)\]\[\033[38;5;6m\][\w]\[$(tput sgr0)\]\[\033[38;5;9m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"' >> $HOME/.bashrc
 ADD ./dockerboot $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
